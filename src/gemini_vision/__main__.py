@@ -1,6 +1,8 @@
 import tkinter as tk
 from .app import AppController
 
+import os
+
 def main():
     """The main entry point for the application."""
     if os.name != "posix":

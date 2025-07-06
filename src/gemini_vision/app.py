@@ -218,7 +218,7 @@ class GeminiVisionApp:
         self.root.after(0, lambda: self.status_var.set("Taking screenshot... Please select a window."))
         self.root.after(0, self.root.withdraw)
         try:
-            time.sleep(0.3)
+            time.sleep(0.1) # Ensure the window is hidden
             subprocess.run(["screencapture", "-i", self.temp_screenshot_path], check=True)
             self.root.after(0, self.root.deiconify)
             if not os.path.exists(self.temp_screenshot_path):
@@ -393,4 +393,5 @@ class AppController:
 
     def quit_app(self):
         """Gracefully shuts down the entire application."""
-        self.root.destroy()
+        # Schedule the destroy command to avoid race conditions with the menu
+        self.root.after(10, self.root.destroy)
